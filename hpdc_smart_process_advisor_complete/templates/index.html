@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Analyze a component · HPDC Smart Process Advisor{% endblock %}
+{% block content %}
+<section class="intro"><p class="eyebrow">CAD-DRIVEN PROCESS ESTIMATION</p><h1>Analyze a die-cast component</h1><p class="lead">Upload a STEP model to extract its geometry and estimate eight HPDC process parameters with the current prototype model.</p></section>
+{% if error %}<div class="notice error" role="alert"><strong>Analysis could not be completed</strong><p>{{ error }}</p></div>{% endif %}
+<section class="workspace">
+  <form id="upload-form" class="upload-panel" action="/analyze" method="post" enctype="multipart/form-data">
+    <label class="dropzone" id="dropzone" for="cad-file"><span class="upload-symbol" aria-hidden="true">↑</span><strong id="file-title">Choose component file</strong><span id="file-subtitle">Drop a STEP/STP file here or browse</span><input id="cad-file" type="file" name="file" accept=".step,.stp,application/step,model/step" required></label>
+    <label class="thickness-field" for="wall-thickness">Nominal wall thickness <span>(optional, user supplied; mm)</span><input id="wall-thickness" name="nominal_wall_thickness_mm" type="number" min="0.01" step="any" placeholder="Leave blank if unknown"><small>This value is recorded in the report only. It is not measured from CAD or used by the model.</small></label>
+    <div class="form-footer"><span>STEP/STP · Up to 25 MB · Processed locally</span><button class="button primary" id="submit-button" type="submit">Analyze component <span aria-hidden="true">→</span></button></div>
+  </form>
+  <aside class="model-note"><p class="eyebrow">MODEL STATUS</p><h2>Prototype model</h2><p>{{ model_message }}</p><p class="small-copy">The prototype uses generated dummy training data to demonstrate the CAD-to-model workflow. It does not represent foundry measurements or validated process settings.</p></aside>
+</section>
+<div class="scope-note"><strong>Engineering scope</strong><span>Wall thickness is not automatically calculated. Die design, alloy, gating, venting and machine context are not inferred from the part model.</span></div>
+{% endblock %}
+{% block scripts %}<script src="/static/upload.js" defer></script>{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}{{ result.filename }} · HPDC Smart Process Advisor{% endblock %}
+{% block content %}
+<div class="result-head"><div><a class="back-link" href="/">← New analysis</a><p class="eyebrow">COMPONENT ANALYSIS</p><h1>{{ result.filename }}</h1><p class="result-status">{{ result.status }} <span>·</span> {{ result.created_at }} UTC</p></div><a class="button secondary" href="/report/{{ result.report_id }}.pdf">Download report <span aria-hidden="true">↓</span></a></div>
+<div class="notice synthetic" role="note"><strong>SYNTHETIC PROTOTYPE</strong><p>Prototype model trained on synthetic data. These estimates demonstrate the software pipeline and are not validated for real production.</p></div>
+{% if result.predictions %}
+<section class="parameters"><div class="section-heading"><div><p class="eyebrow">HPDC PROCESS PARAMETERS</p><h2>Model estimates</h2></div><span class="model-version">{{ result.metadata.model_version }}</span></div><div class="parameter-grid">
+{% for item in result.predictions %}<article class="parameter"><h3>{{ item.label }}</h3><p class="value">{{ item.value }} <span>{{ item.unit }}</span></p><p class="description">{{ item.description }}</p>{% if item.range_warning %}<p class="range-warning">{{ item.range_warning }}</p>{% endif %}</article>{% endfor %}
+</div><p class="footnote">These are model outputs from a synthetic-data pipeline. They are not safe, optimal, or production-approved settings.</p></section>
+{% else %}<div class="notice error"><strong>Parameter estimates unavailable</strong><p>{{ result.warnings[-1] }}</p><p>CAD was processed, but no valid prediction was produced.</p></div>{% endif %}
+<section class="review"><h2>Engineering notes</h2><ul>{% for warning in result.warnings %}<li>{{ warning }}</li>{% endfor %}</ul>{% if result.nominal_thickness_mm %}<p><strong>Nominal wall thickness entered:</strong> {{ result.nominal_thickness_mm }} mm <span class="muted">(user supplied; not measured and not a model input)</span></p>{% endif %}</section>
+<div class="result-actions"><a class="button secondary" href="/report/{{ result.report_id }}.pdf">Download concise PDF report <span aria-hidden="true">↓</span></a><a class="text-link" href="/">Analyze another component</a></div>
+{% endblock %}

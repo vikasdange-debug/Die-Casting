@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#173744"><title>{% block title %}HPDC Smart Process Advisor{% endblock %}</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="masthead"><a href="/" class="brand"><span class="brand-mark">HP</span><span>HPDC Smart Process Advisor</span></a><span class="product-label">PROCESS ENGINEERING</span></header>
+  <main class="container">{% block content %}{% endblock %}</main>
+  <footer class="footer">Prototype process estimates require review by a qualified die-casting engineer.</footer>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

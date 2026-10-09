@@ -1,0 +1,3 @@
+# Optional. Install this for the styled ReportLab report renderer.
+# A tested built-in PDF renderer remains available when this package is offline/unavailable.
+reportlab>=4.2,<5
